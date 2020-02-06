@@ -66,6 +66,7 @@ class LoginPageService with ChangeNotifier {
     UserCredentials credentials = UserCredentials(
       email: emailController.text,
       password: passwordController.text,
+      id: '',
     );
     bool response = await authService.loginUser(credentials: credentials);
     if (response) {

@@ -11,6 +11,7 @@ class AuthController {
       return UserCredentials(
         email: shared.getString('email'),
         password: shared.getString('password'),
+        id: shared.getString('id'),
       );
     }
   }
@@ -20,6 +21,7 @@ class AuthController {
     bool emailSaved = await shared.setString('email', credentials.email);
     bool passwordSaved =
         await shared.setString('password', credentials.password);
-    return emailSaved && passwordSaved;
+    bool id = await shared.setString('id', credentials.id);
+    return emailSaved && passwordSaved && id;
   }
 }

@@ -24,10 +24,10 @@ class AuthService with ChangeNotifier {
     if (userCredentials != null) {
       savedUserCredentials = userCredentials;
       initialPage = 'dashboard';
-      print('getted credentials');
+      Response response = await get(loginEndpoint(savedUserCredentials),
+          headers: getBasicHeaders());
+      userData = User.fromJSON(json.decode(response.body)['result'][0]);
       notifyListeners();
-    } else {
-      print('no credentials');
     }
   }
 
@@ -35,7 +35,7 @@ class AuthService with ChangeNotifier {
       {UserCredentials credentials, bool shouldSave = false}) async {
     try {
       Response response =
-          await get(loginEndpoint(), headers: getBasicHeaders());
+          await get(loginEndpoint(credentials), headers: getBasicHeaders());
       /* print(response.body); */
       userData = User.fromJSON(json.decode(response.body)['result'][0]);
       bool saved = await _authController.saveUserCredentials(credentials);
@@ -62,6 +62,29 @@ class AuthService with ChangeNotifier {
       notifyListeners();
       bool saved =
           await _authController.saveUserCredentials(user.toCredentials());
+      if (saved) {
+        await Fluttertoast.cancel();
+        Fluttertoast.showToast(msg: 'Credentials saved');
+      } else {
+        await Fluttertoast.cancel();
+        Fluttertoast.showToast(msg: '¡Error! Credentials not saved');
+      }
+      return true;
+    } catch (e) {
+      await Fluttertoast.cancel();
+      Fluttertoast.showToast(msg: 'Error ocurred try again later: $e');
+      return false;
+    }
+  }
+
+  updateUserData(User newUserData) async {
+    try {
+      Response response = await patch(updateEndpoint(newUserData),
+          body: newUserData.toJSON(), headers: getBasicHeaders());
+      userData = User.fromJSON(json.decode(response.body)['result']);
+      notifyListeners();
+      bool saved = await _authController
+          .saveUserCredentials(newUserData.toCredentials());
       if (saved) {
         await Fluttertoast.cancel();
         Fluttertoast.showToast(msg: 'Credentials saved');

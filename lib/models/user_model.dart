@@ -44,6 +44,7 @@ class User {
     return UserCredentials(
       email: email,
       password: password,
+      id: id,
     );
   }
 }
