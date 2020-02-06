@@ -41,6 +41,9 @@ class SettingsPageBase extends StatelessWidget {
     );
   }
 
+  /// Estos métodos se implementaron el la misma sección del UI, 
+  /// deberían haber sido implementados en un servicio aparte, 
+  /// pero por cuestión de tiempo no se hizo
   editUsername(BuildContext context) async {
     AuthService authService = Provider.of<AuthService>(context, listen: false);
     dynamic response = await showModalBottomSheet(

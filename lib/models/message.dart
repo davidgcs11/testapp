@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
+/// Modelo creado en base al modelo de mensajes emitidos por el servidor del proyecto de prueba
 class Message {
   String message;
   String username;

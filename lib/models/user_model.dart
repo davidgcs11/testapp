@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:testapp/models/user_crendentials.dart';
 
+/// Modelo con información básica y adicional de cada usuario
 class User {
   String username;
   String email;

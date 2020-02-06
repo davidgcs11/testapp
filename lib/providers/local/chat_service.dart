@@ -22,14 +22,23 @@ class ChatService with ChangeNotifier {
   }
 
   configureSocket(BuildContext context) async {
-    print('running');
     SocketIOManager manager = SocketIOManager();
     SocketIO socket = manager.createSocketIO('http://127.0.0.1:3000', '');
-    socket.init();
+    await socket.init();
     await socket.connect();
-    Map<String, String> data = {'username': 'david'};
+    AuthService authService = Provider.of<AuthService>(context);
+    String username = authService.userData?.username ?? 'NoUsername';
+    Map<String, String> data = {'username': username};
     socket.sendMessage('add user', json.encode(data));
-  
+    socketIO.init();
+    //Subscribe to an event to listen to
+    socketIO.subscribe('new message', (jsonData) {
+      //Convert the JSON data received into a Map
+      Map<String, dynamic> data = json.decode(jsonData);
+      messages.add(Message.fromJSON(data));
+    });
+    //Connect to the socket
+    socketIO.connect();
     notifyListeners();
   }
 

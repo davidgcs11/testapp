@@ -54,6 +54,8 @@ class LoginPageService with ChangeNotifier {
     return validation;
   }
 
+  /// Para una mejor interacción se realizan validaciones de los campos
+  /// en cada escritura en cualquiera de los [TextFormFields]
   validate({bool signupview = true}) {
     bool email = validateEmail();
     bool password = validatePW();
@@ -61,6 +63,7 @@ class LoginPageService with ChangeNotifier {
     notifyListeners();
   }
 
+  /// Crea el usuario [UserCredentials] y lo pasa al [AuthService]
   authenthicate(BuildContext context) async {
     AuthService authService = Provider.of<AuthService>(context, listen: false);
     UserCredentials credentials = UserCredentials(
@@ -78,6 +81,7 @@ class LoginPageService with ChangeNotifier {
     }
   }
 
+  /// Navegar a la siguiente página
   goToSignUp(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(

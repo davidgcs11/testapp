@@ -13,17 +13,24 @@ class SignUpPageService with ChangeNotifier {
       TextEditingController(text: 'https://drquiz.app/assets/images/logo.png');
   bool validated = false;
 
+  /// Validación de contraseña
   bool validatePW({String textbase}) {
     String text = textbase ?? passwordController.text;
+
+    /// Esta es la validación pedida
     /* String pattern = r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[!@#\$&*~]).{8,}$'; */
+    /// Esta es la validación que encaja con el freeAPI
     String pattern = r'^(?=.*?[A-Z])(?=.*?[a-z]).{8,}$';
     RegExp regExp = new RegExp(pattern);
     return regExp.hasMatch(text);
   }
 
+  /// Validación de email
   bool validateEmail({String textbase}) {
     bool validation = true;
     String text = textbase ?? emailController.text;
+
+    /// Regex general para validar email
     bool basicValidation = RegExp(
             r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$")
         .hasMatch(text);
@@ -42,6 +49,7 @@ class SignUpPageService with ChangeNotifier {
     return validation;
   }
 
+  /// Validación del username
   bool validateUsername({String textbase}) {
     bool validation = true;
     String text = textbase ?? usernameController.text;

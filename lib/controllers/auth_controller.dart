@@ -2,6 +2,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:testapp/models/user_crendentials.dart';
 
 class AuthController {
+  /// Se encarga de obtener la data local y la transforma a un objeto [UserCredential]
   Future<UserCredentials> getUserSavedCredentials() async {
     SharedPreferences shared = await SharedPreferences.getInstance();
     List<String> currentKeys = shared.getKeys().toList();
@@ -16,6 +17,7 @@ class AuthController {
     }
   }
 
+  /// Guarda un objeot [UserCredential] con SharedPreferences
   Future<bool> saveUserCredentials(UserCredentials credentials) async {
     SharedPreferences shared = await SharedPreferences.getInstance();
     bool emailSaved = await shared.setString('email', credentials.email);

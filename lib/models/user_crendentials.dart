@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 
+/// Modelo con información para almacenar e iniciar sesión
 class UserCredentials {
   String email;
   String password;

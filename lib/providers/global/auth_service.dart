@@ -18,12 +18,15 @@ class AuthService with ChangeNotifier {
     getUserSavedCredentials();
   }
 
+  /// Conseguir la información local
   getUserSavedCredentials() async {
     UserCredentials userCredentials =
         await _authController.getUserSavedCredentials();
     if (userCredentials != null) {
       savedUserCredentials = userCredentials;
       initialPage = 'dashboard';
+
+      /// En caso exista la información local se extrae la data del usuario del FreeAPI
       Response response = await get(loginEndpoint(savedUserCredentials),
           headers: getBasicHeaders());
       userData = User.fromJSON(json.decode(response.body)['result'][0]);
@@ -31,6 +34,7 @@ class AuthService with ChangeNotifier {
     }
   }
 
+  /// Inicio de sesión del usuario
   Future<bool> loginUser(
       {UserCredentials credentials, bool shouldSave = false}) async {
     try {
@@ -54,6 +58,7 @@ class AuthService with ChangeNotifier {
     }
   }
 
+  /// Registro de un nuevo usuario
   Future<bool> registerUser({User user, bool shouldSave = false}) async {
     try {
       Response response = await post(registerEndpoint(),
@@ -77,6 +82,7 @@ class AuthService with ChangeNotifier {
     }
   }
 
+  /// Actualización de la información de un nuevo usuario
   updateUserData(User newUserData) async {
     try {
       Response response = await patch(updateEndpoint(newUserData),

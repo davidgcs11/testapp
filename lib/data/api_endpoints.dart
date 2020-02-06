@@ -13,9 +13,9 @@ String updateEndpoint(User credentials) {
   return 'https://gorest.co.in/public-api/users/${credentials.id}?&access-token=zmSREIpxH5DCVw4ULglIYfNTWiTRZpvKLKZd';
 }
 
+/// Basic JSON Headers
 Map<String, String> getBasicHeaders() {
   return {
     'Content-Type': 'application/json',
-    'Access-Token': 'zmSREIpxH5DCVw4ULglIYfNTWiTRZpvKLKZd',
   };
 }
